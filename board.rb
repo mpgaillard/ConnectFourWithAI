@@ -31,7 +31,6 @@ class Board
 		if move =~ /^[0-6]$/ and next_available_row[move.to_i] >= 0
 			true
 		else
-			puts "Invalid Move"
 			false
 		end
 	end
@@ -71,8 +70,8 @@ class Board
 		row = @next_available_row[column] + 1 # previous row		
 		color = @grid[row][column].color
 
-		(-1..1).to_a.each do |dir_x|
-			(0..1).to_a.each do |dir_y|
+		(-1..1).each do |dir_x|
+			(0..1).each do |dir_y|
 				next if dir_x == 0 and dir_y == 0
 				propagate_left = count_discs(column, row, dir_x, dir_y, color)
 				propagate_right = count_discs(column, row, -dir_x, -dir_y, color)
@@ -82,7 +81,6 @@ class Board
 
 		false
 	end
-
 
 end
 

@@ -12,7 +12,8 @@ class HumanPlayer < Player
 		gets.chomp
 	end
 
-	def choose_column
+
+	def choose_column(board)
 		get_input
 	end
 
