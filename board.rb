@@ -17,7 +17,7 @@ class Board
 	end
 	def to_s
 		system('clear')
-		out = ""
+		out = " CONNECT FOUR\n".colorize(:light_magenta)
 		@rows.times  do |row|
 			@cols.times do |col|
 				out << "|".colorize(:light_yellow) << "#{grid[row][col]}"

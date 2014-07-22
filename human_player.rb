@@ -3,8 +3,8 @@ require_relative "player"
 
 class HumanPlayer < Player
 
-	def initialize(color)
-		super(color)	
+	def initialize(name, color)
+		super(name, color)	
 	end
 
 	def get_input

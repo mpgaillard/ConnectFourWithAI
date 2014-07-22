@@ -1,10 +1,11 @@
 require_relative 'disc'
 
 class Player
-	attr_reader :color
+	attr_reader :color, :name
 	
-	def initialize(color)
+	def initialize(name, color)
 		@color = color
+		@name = name
 	end
 
 	def insert_disc

@@ -4,10 +4,10 @@ require_relative "ai_state"
 
 class ComputerPlayer < Player
 
-	attr_reader :opponent 
+	attr_accessor :opponent 
 	INF = 1000000
-	def initialize(color, opponent)
-		super(color)
+	def initialize(name, color, opponent=nil)
+		super(name, color)
 		@opponent = opponent	
 	end
 
