@@ -15,10 +15,8 @@ class ComputerPlayer < Player
 
 	
 	def minimax(board, move, depth)
-		#puts move.to_s + " " + depth.to_s if depth == 4
-		#puts board.four_consecutive_blind_discs(move) #if depth == 4
-		puts board #if depth == 4
-
+		#UNCOMMENT THIS IF YOU WANT TO SEE SOMETHING COOL
+		#puts board
 		if board.next_available_row.max < 0
 			AIState.new(move, 0)
 		elsif board.four_consecutive_blind_discs(move)
@@ -34,7 +32,7 @@ class ComputerPlayer < Player
 		alpha = AIState.new( board.first_valid_col, INF)
 		(0...board.cols).each do |i|
 			if board.valid_column?(i.to_s)
-				board[i] = insert_disc
+				board[i] = depth%2 == 0 ? insert_disc : @opponent.insert_disc
 				child = minimax(board, i, depth-1)
 				if -child.score < alpha.score
 					alpha.score = -child.score
@@ -54,7 +52,7 @@ class ComputerPlayer < Player
 
 
 	def choose_column(board)
-		generate_possible_moves(board, -1, 5).move.to_s
+		generate_possible_moves(board, -1, 6).move.to_s
 		#get_input
 	end
 
