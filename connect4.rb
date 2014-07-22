@@ -22,6 +22,7 @@ class Game
 
 	def play
 		#Recommended by ruby's author instead of a do while
+		puts "GREETINGS PUNY HUMAN. WELCOME TO MY WORLD!"
 		loop do
 			puts @board
 			player_move = @players[@turn].choose_column(@board.dup)

@@ -1,6 +1,6 @@
 require_relative "player"
 require_relative "ai_state"
-require 'debugger'
+#require 'debugger'
 
 class ComputerPlayer < Player
 
