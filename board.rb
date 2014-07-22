@@ -108,31 +108,6 @@ class Board
 	end
 
 
-	#REPEATING MYSELF. TO BE REFACTORED
-	def four_consecutive_blind_discs(last_move)
-		column = last_move.to_i
-		row = @next_available_row[column] + 1 # previous row		
-		#color = @grid[row][column].color
-
-		(-1..1).each do |dir_x|
-			(0..1).each do |dir_y|
-				next if dir_x == 0 and dir_y == 0
-				if (!outside_of_boundaries?(column+dir_x, row+dir_y) and @grid[row+dir_y][column+dir_x].is_a? Disc)
-					color = @grid[row+dir_y][column+dir_x].color
-				elsif ( !outside_of_boundaries?(column-dir_x, row-dir_y) and @grid[row-dir_y][column-dir_x].is_a? Disc)
-					color = @grid[row-dir_y][column-dir_x].color
-				else
-					color = @grid[row][column].color
-				end
-				propagate_left = count_discs(column+dir_x, row+dir_y, dir_x, dir_y, color)
-				propagate_right = count_discs(column-dir_x, row-dir_y, -dir_x, -dir_y, color)
-				return true if propagate_left + propagate_right == 3
-			end
-		end
-		false
-	end
-
-	#REPEATING MYSELF. TO BE REFACTORED
 	def four_consecutive_discs(last_move)
 		column = last_move.to_i
 		row = @next_available_row[column] + 1 # previous row		

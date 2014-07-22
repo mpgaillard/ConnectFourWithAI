@@ -2,8 +2,6 @@ require_relative "player"
 require_relative "ai_state"
 require 'debugger'
 
-
-
 class ComputerPlayer < Player
 
 	attr_reader :opponent 
