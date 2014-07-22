@@ -16,12 +16,14 @@ class Board
 		return @next_available_row[col] == 0
 	end
 	def to_s
+		system('clear')
 		out = ""
 		@rows.times  do |row|
 			@cols.times do |col|
 				out << "|".colorize(:light_yellow) << "#{grid[row][col]}"
 			end
 			out << "|\n".colorize(:light_yellow)
+			out << ("+-" * @cols).colorize(:light_yellow) << "-\n".colorize(:light_yellow)
 		end
 		out << " " << (0..6).to_a.join(" ").colorize(:cyan) << "\n"
 		out
@@ -100,17 +102,16 @@ class Board
 	end
 
 	def count_discs(x, y, dir_x, dir_y, color)
-		if (outside_of_boundaries?(x, y) or @grid[y][x] == " " or @grid[y][x].color != color)
-			0
-		else
-			1 + count_discs(x+dir_x, y+dir_y, dir_x, dir_y, color)
-		end
+		valid_propagation?(x,y,color) ? 1 + count_discs(x+dir_x, y+dir_y, dir_x, dir_y, color) : 0
 	end
 
+	def valid_propagation?(x,y,color)
+		!(outside_of_boundaries?(x, y) or @grid[y][x] == " " or @grid[y][x].color != color)
+	end
 
 	def four_consecutive_discs(last_move)
 		column = last_move.to_i
-		row = @next_available_row[column] + 1 # previous row		
+		row = @next_available_row[column] + 1 # previous row
 		color = @grid[row][column].color
 
 		(-1..1).each do |dir_x|
