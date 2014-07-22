@@ -19,7 +19,7 @@ class ComputerPlayer < Player
 		#puts board
 		if board.next_available_row.max < 0
 			AIState.new(move, 0)
-		elsif board.four_consecutive_blind_discs(move)
+		elsif board.four_consecutive_discs(move)
 			AIState.new(move, INF)
 		elsif depth == 0
 			AIState.new(move, board.heuristic_count(move) )
