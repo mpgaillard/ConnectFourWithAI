@@ -27,7 +27,6 @@ class Game
 			player_move = @players[@turn].choose_column(@board.dup)
 
 			if @board.valid_column?(player_move)
-				puts player_move
 				@board[player_move] = @players[@turn].insert_disc
 				@turn = (@turn+1)%2
 				break if game_over?(player_move)

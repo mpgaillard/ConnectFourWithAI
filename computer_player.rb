@@ -7,69 +7,55 @@ require 'debugger'
 class ComputerPlayer < Player
 
 	attr_reader :opponent 
-
+	INF = 1000000
 	def initialize(color, opponent)
 		super(color)
 		@opponent = opponent	
 	end
 
-	def min_move(a, b)
+	
+	def minimax(board, move, depth)
+		#puts move.to_s + " " + depth.to_s if depth == 4
+		#puts board.four_consecutive_blind_discs(move) #if depth == 4
+		puts board #if depth == 4
 
-    	a < b ? a : b
-   	end
-
-	def alpha_beta(board, depth, lastMove, alpha, beta, maximizing)
-		#puts board
-		#debugger
-		if board.next_available_row.max < 0 or depth == 0
-			return AIState.new(lastMove, 0)
-		elsif lastMove >= 0 and board.four_consecutive_discs(lastMove)
-			return AIState.new(lastMove, maximizing ? 2 : 1)
-		end 
-
-		if maximizing
-			(0...board.cols).each do |i|
-				if board.valid_column?(i.to_s)
-					board[i] = insert_disc
-					child = alpha_beta(board, depth-1, i, alpha, beta, false)
-					if child.score > alpha.score
-						alpha.score = child.score
-						alpha.move = i
-					end
-					board.take_back_move(i)
-					break if beta <= alpha
-				end
-			end
-			return alpha
+		if board.next_available_row.max < 0
+			AIState.new(move, 0)
+		elsif board.four_consecutive_blind_discs(move)
+			AIState.new(move, INF)
+		elsif depth == 0
+			AIState.new(move, board.heuristic_count(move) )
 		else
-			(0...board.cols).each do |i|
-				if board.valid_column?(i.to_s)
-					board[i] = @opponent.insert_disc
-					child = alpha_beta(board, depth-1, i, alpha, beta, false)
-					if child.score < beta.score
-						beta.score = child.score
-						beta.move = i
-					end
-					#beta = [beta, alpha_beta(board, depth-1, i, alpha, beta, true) ].min
-					board.take_back_move(i)
-					break if beta <= alpha
-				end
-			end
-			return beta
-		end
+			generate_possible_moves(board, move, depth)
+		end	
 	end
+
+	def generate_possible_moves(board, move, depth)
+		alpha = AIState.new( board.first_valid_col, INF)
+		(0...board.cols).each do |i|
+			if board.valid_column?(i.to_s)
+				board[i] = insert_disc
+				child = minimax(board, i, depth-1)
+				if -child.score < alpha.score
+					alpha.score = -child.score
+					alpha.move = i
+				end	
+				board.take_back_move(i)
+			end
+		end
+		alpha
+	end
+
+
+	def get_input
+		puts "Please choose a column to drop a piece(0-6):"
+		gets.chomp
+	end
+
 
 	def choose_column(board)
-		res = alpha_beta(board, 7, -1, AIState.new(0, -1), AIState.new(0 ,1), true).move.to_s
-		puts res 
-		if board.valid_column?(res.to_s)
-			res
-		else
-			(0...board.cols).each do |i|
-				return i.to_s if board.valid_column?(i.to_s)
-			end
-		end
+		generate_possible_moves(board, -1, 5).move.to_s
+		#get_input
 	end
-
 
 end
