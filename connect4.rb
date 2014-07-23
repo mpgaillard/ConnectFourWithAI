@@ -27,7 +27,7 @@ class Game
 		sleep(4.0)
 		loop do
 			puts @board
-			puts  "#{@players[@turn].name}'s turn."
+			puts  "#{@players[@turn].name}'s turn.".colorize(@players[@turn].color)
 			player_move = @players[@turn].choose_column(@board.dup)
 
 			if @board.valid_column?(player_move)
