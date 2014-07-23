@@ -6,7 +6,7 @@ class AIState
     	@score = score
   	end
 	def <=(b)
-		return @move <= b.move
+		return @score <= b.score
 	end
 
 end
