@@ -15,8 +15,9 @@ class Game
 	end
 
 	def init_players(name_p1, name_p2)
-		@human_player = HumanPlayer.new(name_p1, @turn ? :red : :blue)
+		@human_player = ComputerPlayer.new(name_p1, @turn ? :red : :blue)
 		@computer_player = ComputerPlayer.new(name_p2, @turn ? :blue : :red, @human_player)
+		@human_player.opponent = @computer_player
 		@players = [@human_player, @computer_player]
 	end
 

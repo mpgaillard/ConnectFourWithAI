@@ -60,10 +60,10 @@ class Board
 	end
 
 	def heuristics_count_discs(x, y, dir_x, dir_y, depth, color)
-		if(outside_of_boundaries?(x, y) or (@grid[y][x].is_a? Disc and @grid[y][x].color != color))
-			-INF
-		elsif depth == 0
+		if depth == 0
 			0
+		elsif(outside_of_boundaries?(x, y) or (@grid[y][x].is_a? Disc and @grid[y][x].color != color))
+			-INF
 		else
 			(@grid[y][x] == " " ? 0 : 1) + heuristics_count_discs(x+dir_x, y+dir_y, dir_x, dir_y, depth-1, color) 
 		end
@@ -77,23 +77,23 @@ class Board
 
 		heuristic_val = 0
 
-		(x-3...x).each do |start|
+		(x-3..x).each do |start|
 			val = heuristics_count_discs(start, y, 1, 0, 4, color)
 			heuristic_val += prc.call(val)
 		end
 
-		(y-3...y).each do |start|
+		(y-3..y).each do |start|
 			val = heuristics_count_discs(x, start, 0, 1, 4, color)
 			heuristic_val += prc.call(val)
 		end
 
 
-		(-3...0).each do |start|
+		(-3..0).each do |start|
 			val = heuristics_count_discs(x+start, y+start, 1, 1, 4, color)
 			heuristic_val += prc.call(val)
 		end
 
-		(-3...0).each do |start|
+		(-3..0).each do |start|
 			val = heuristics_count_discs(x-start, y+start, -1, 1, 4, color)
 			heuristic_val += prc.call(val)
 		end
